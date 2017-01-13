@@ -25,9 +25,7 @@ SOFTWARE.
 
 #include <string.h>
 #include <time.h>
-#include <lua.h>
-#include <lualib.h>
-#include <lauxlib.h>
+#include "luaformula.h"
 
 // this will be available in the globals, so the user can tamper its value, so what now ???
 #define _MAGIC_LUA_TO_VAR_ "___the_magic_lua_variable____"
@@ -61,7 +59,10 @@ lua_State * luaStateAlloc(int managedCode) {
                     "loadfile=nil; " \
                     "loadstring=nil; " \
                     "setfenv=nil; " \
-                    "require=nil; ";
+                    "require=nil; " \
+                    "module = nil;" \
+                    "xpcall = nil;" \
+                    "setmetatable = nil;";
             if ((luaL_loadstring(L, preCode) || lua_pcall(L, 0, 0, 0))) {
                 lua_close(L);
                 L = NULL;

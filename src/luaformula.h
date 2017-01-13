@@ -37,31 +37,35 @@ SOFTWARE.
 extern "C" {
 #endif
 
-/**
- * Load Lua state and protect it from using some libraries and functions
- * that can harm the system
- * @param managedCode True if we can trust in the code
- * @return Pointer to Lua state or NULL if error
- */
-lua_State * luaStateAlloc(int managedCode);
+#include <lua.h>
+#include <lualib.h>
+#include <lauxlib.h>
 
-/**
- * Close lua state
- * @param L Lua state pointer
- */
-void luaStateFree(lua_State *L);
+    /**
+     * Load Lua state and protect it from using some libraries and functions
+     * that can harm the system
+     * @param managedCode True if we can trust in the code
+     * @return Pointer to Lua state or NULL if error
+     */
+    lua_State * luaStateAlloc(int managedCode);
+
+    /**
+     * Close lua state
+     * @param L Lua state pointer
+     */
+    void luaStateFree(lua_State *L);
 
 
-/**
- * Execute a formula
- * The user may wish to wrap this function in a new thread and join it with a timer
- * @param L TheLua state
- * @param code The code to be executed
- * @param result The formula result
- * @param timeout The maximum execution time in seconds
- * @return NULL if OK or a error message. Must be freed by the caller
- */
-char *luaExecuteFormula(lua_State *L, const char *code, double *result, int timeout);
+    /**
+     * Execute a formula
+     * The user may wish to wrap this function in a new thread and join it with a timer
+     * @param L TheLua state
+     * @param code The code to be executed
+     * @param result The formula result
+     * @param timeout The maximum execution time in seconds
+     * @return NULL if OK or a error message. Must be freed by the caller
+     */
+    char *luaExecuteFormula(lua_State *L, const char *code, double *result, int timeout);
 
 
 #ifdef __cplusplus
